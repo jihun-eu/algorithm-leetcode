@@ -1,11 +1,5 @@
 class Solution:
-
-    @staticmethod
-    def collided(top: int, asteroid: int) -> bool:
-        return asteroid < 0 < top
-
     def asteroidCollision(self, asteroids: List[int]) -> List[int]:
-        
         stack = []
         for asteroid in asteroids:
             if asteroid > 0:
