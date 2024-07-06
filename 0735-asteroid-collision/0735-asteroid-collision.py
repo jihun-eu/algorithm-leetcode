@@ -1,42 +1,33 @@
+import math
 class Solution:
-
-    @staticmethod
-    def is_sign_equal(top: int, asteroid: int) -> bool:
-        if top < 0:
-            return True
-
-        return top * asteroid > 0
-
     def asteroidCollision(self, asteroids: List[int]) -> List[int]:
-        
         stack = []
-        top = None
         for asteroid in asteroids:
-            if not stack or asteroid > 0:
+            if len(stack) == 0 or asteroid > 0:
                 stack.append(asteroid)
             else:
-
-                abs_asteroid = abs(asteroid)
-
                 while True:
-                    if not stack:
+                    if len(stack) == 0:
                         stack.append(asteroid)
                         break
-
-                    top = stack[-1]
-                    if Solution.is_sign_equal(top, asteroid):
+                    peek = stack[-1]
+                    if peek < 0 or peek * asteroid > 0:
                         stack.append(asteroid)
                         break
-
-                    if abs_asteroid == top:
+                    
+                    abs_asteroid = abs(asteroid)
+                    if peek == abs_asteroid:
                         stack.pop()
                         break
-                    if abs_asteroid > top:
-                        stack.pop()
-                        continue
+                    elif peek > abs_asteroid:
+                        break
                     else:
-                        break
+                        stack.pop()
 
         return stack
 
-            
+                        
+
+                        
+
+                    
