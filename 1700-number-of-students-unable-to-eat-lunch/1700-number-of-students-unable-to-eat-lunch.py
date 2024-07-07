@@ -1,21 +1,18 @@
 class Solution:
     def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
         
-        index = 0
-        student_size = len(students)
-        tmp = 0
+        student_count = len(students)
 
-        while True:
-            if tmp == student_size:
+        student_table = {}
+        student_table[0] = students.count(0)
+        student_table[1] = student_count - student_table[0]
+
+        
+
+        for sandwich in sandwiches:
+            if student_table[sandwich] > 0:
+                student_table[sandwich] -= 1
+                student_count -= 1
+            else:
                 break
-            if sandwiches and students[index] == sandwiches[0]:
-                sandwiches.pop(0)
-                students[index] = -1
-                tmp = 0
-            index = (index + 1) % student_size
-            tmp += 1
-
-        not_eaten_students = student_size - students.count(-1)
-
-        return not_eaten_students
-                
+        return student_count
