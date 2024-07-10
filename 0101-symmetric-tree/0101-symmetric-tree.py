@@ -6,37 +6,15 @@
 #         self.right = right
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-       
-        def left_bfs(root):
-            visited = []
-            queue = [root]
-            while queue:
-                child = queue.pop(0)
-
-                if child is not None:
-                    visited.append(child.val)
-                    queue.append(child.left)
-                    queue.append(child.right)
-                else:
-                    visited.append(None)
-
-            return visited
-                    
+        def is_same(left: TreeNode, right: TreeNode) -> bool:
+            if not left and not right:
+                return True
+            elif (left and not right) or (not left and right) or (left.val != right.val):
+                return False
+            else:
+                return is_same(left.left, right.right) and is_same(left.right, right.left)
         
-        def right_bfs(root):
-            visited = []
-            queue = [root]
-            while queue:
-                child = queue.pop(0)
-
-                if child is not None:
-                    visited.append(child.val)
-                    queue.append(child.right)
-                    queue.append(child.left)
-                else:
-                    visited.append(None)
-
-            return visited
-
-        return left_bfs(root) == right_bfs(root)
-                    
+        if not root:
+            return True
+        else:
+            return is_same(root.left, root.right)
