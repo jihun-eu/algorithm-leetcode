@@ -10,22 +10,25 @@ class Solution:
         if not root:
             return result
 
-        queue = [(0, root)]
+        queue = [root]
         current_level = -1
         while queue:
-            (level, child) = queue.pop(0)
-            if level > current_level:
-                current_level = level
-                result.append([])
+            
+            level_nodes_count = len(queue)
+            level_nodes = []
+            for i in range(level_nodes_count):
+                child = queue.pop(0)
+                
+                level_nodes.append(child.val)
 
-            result[level].append(child.val)
-            next_level = level + 1
+                if child.left:
+                    queue.append(child.left)
 
-            if child.left:
-                queue.append((next_level, child.left))
+                if child.right:
+                    queue.append(child.right)
 
-            if child.right:
-                queue.append((next_level, child.right))
+            result.append(level_nodes)        
+
 
         return result
 
