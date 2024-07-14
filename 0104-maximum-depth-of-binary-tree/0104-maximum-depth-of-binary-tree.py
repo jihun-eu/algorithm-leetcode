@@ -9,15 +9,15 @@ class Solution:
         if not root:
             return 0
         
-        max_level = 1
-        queue = [(1, root)]
+        max_level = 0
+        queue = [root]
         while queue:
-            level, child = queue.pop(0)
-            max_level = max(level, max_level)
-            next_level = level + 1
-            if child.left:
-                queue.append((next_level, child.left))
-            if child.right:
-                queue.append((next_level, child.right))
+            max_level += 1
+            for tries in range(len(queue)):
+                child = queue.pop(0)
+                if child.left:
+                    queue.append(child.left)
+                if child.right:
+                    queue.append(child.right)
             
         return max_level
