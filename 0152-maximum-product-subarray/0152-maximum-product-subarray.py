@@ -1,5 +1,6 @@
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
+        # try it again
         length = len(nums)
         min_prod = nums[0]
         max_prod = nums[0]
