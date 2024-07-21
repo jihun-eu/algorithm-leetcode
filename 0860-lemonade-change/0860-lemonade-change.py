@@ -5,17 +5,15 @@ class Solution:
             table[bill] += 1
 
             charge = bill - 5
-            if charge == 15:
-                if table[10] > 0 and table[5] > 0:
-                    table[10] -= 1
-                    table[5] -= 1
-                elif table[5] > 2:
-                    table[5] -= 3
-                else:
-                    return False
-            if charge == 5:
-                if table[5] > 0:
-                    table[5] -= 1
-                else:
-                    return False
+            while charge > 0:
+                for change in [10, 5]:
+                    if change > charge:
+                        continue
+                    if table[change] == 0:
+                        if change == 5:
+                            return False
+                        continue
+                    charge -= change
+                    table[change] -= 1
+
         return True
