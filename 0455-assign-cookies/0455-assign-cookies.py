@@ -4,11 +4,13 @@ class Solution:
         s.sort()
 
         contents = 0
-        while g and s:
-            if g[-1] <= s[-1]:
-                s.pop()
+        child, jar = len(g)-1, len(s)-1
+        while child >= 0 and jar >= 0:
+            print(child, jar)
+            if g[child] <= s[jar]:
+                jar -= 1
                 contents += 1
-            g.pop()
+            child -= 1
         
         return contents
 
