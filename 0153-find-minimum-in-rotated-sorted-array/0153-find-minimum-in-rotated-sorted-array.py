@@ -1,5 +1,6 @@
 class Solution:
     def findMin(self, nums: List[int]) -> int:
+        # try it again
         front = 0
         tail = len(nums) - 1
         
