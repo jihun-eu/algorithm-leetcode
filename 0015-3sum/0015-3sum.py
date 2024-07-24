@@ -6,6 +6,8 @@ class Solution:
         results = []
 
         for target_idx in range(len(nums)-2):
+            if nums[target_idx] > 0:
+                break
             if target_idx > 0 and nums[target_idx] == nums[target_idx-1]: continue
             
             left = target_idx + 1
