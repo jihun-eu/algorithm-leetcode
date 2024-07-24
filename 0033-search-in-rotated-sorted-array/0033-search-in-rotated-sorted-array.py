@@ -1,6 +1,6 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        
+        # try it again
         front = 0
         tail = len(nums) - 1
 
