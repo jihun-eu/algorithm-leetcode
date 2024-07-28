@@ -3,8 +3,13 @@ class Solution:
         if n < 3:
             return n
 
-        memory = [1, 2]
-        for i in range(2, n):
-            memory.append(memory[i-1] + memory[i-2])
+        step1 = 1
+        step2 = 1
+        for i in range(1, n):
+            tmp = step1
+            step1 = step1 + step2
+            step2 = tmp
+        return step1
+            
         return memory[n-1]
         
