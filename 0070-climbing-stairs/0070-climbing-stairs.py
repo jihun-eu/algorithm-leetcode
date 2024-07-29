@@ -3,11 +3,10 @@ class Solution:
         if n < 3:
             return n
 
-        step1 = 1
-        step2 = 1
+        step = [1, 1]
         for i in range(1, n):
-            tmp = step1
-            step1 = step1 + step2
-            step2 = tmp
-        return step1
+            tmp = step[1]
+            step[1] = sum(step)
+            step[0] = tmp
+        return step[1]
         
