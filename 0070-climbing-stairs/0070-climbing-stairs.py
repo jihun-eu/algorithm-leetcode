@@ -10,6 +10,4 @@ class Solution:
             step1 = step1 + step2
             step2 = tmp
         return step1
-            
-        return memory[n-1]
         
