@@ -1,18 +1,26 @@
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        def binarySearch(arr: List[int], target: int):
-            left = 0
-            right = len(arr) - 1
+        # try it again
+        head = 0
+        rows = len(matrix)
+        cols = len(matrix[0])
 
-            while left <= right:
-                mid = (left + right) // 2
-                if arr[mid] == target:
-                    return True
-                elif arr[mid] > target:
-                    right = mid - 1
-                else:
-                    left = mid + 1
-            return False
+        tail = rows * cols - 1
 
-        flatten_matrix = [el for arr in matrix for el in arr]
-        return binarySearch(flatten_matrix, target)
+        while head <= tail:
+        
+            mid = (head+tail) // 2
+            row = mid // cols 
+            col = mid % cols 
+            
+            num = matrix[row][col]
+
+            if num == target:
+                return True
+            
+            if num > target:
+                tail = mid - 1
+            else:
+                head = mid + 1
+        
+        return False
