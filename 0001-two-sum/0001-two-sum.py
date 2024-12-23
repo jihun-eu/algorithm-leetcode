@@ -1,8 +1,12 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        length = len(nums)
-        for index1 in range(length-1):
-            for index2 in range(index1+1, length):
-                if nums[index1]+nums[index2] == target:
-                    return [index1, index2]
-                
+        
+        size = len(nums)
+        
+        for ptr1 in range(size-1):
+            for ptr2 in range(ptr1+1, size):
+                val = nums[ptr1] + nums[ptr2]
+                if val == target:
+                    return [ptr1, ptr2]
+
+        
