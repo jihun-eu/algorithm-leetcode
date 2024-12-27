@@ -1,12 +1,12 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         
+        visited = {}
         size = len(nums)
-        
-        for ptr1 in range(size-1):
-            for ptr2 in range(ptr1+1, size):
-                val = nums[ptr1] + nums[ptr2]
-                if val == target:
-                    return [ptr1, ptr2]
 
-        
+        for i, num in enumerate(nums):
+            sub = target - num
+            if sub in visited:
+                return [i, visited[sub]]
+                
+            visited[num] = i
