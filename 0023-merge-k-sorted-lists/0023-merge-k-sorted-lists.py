@@ -1,23 +1,25 @@
 class Solution:
+
+
+    def mergeLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        if not(list1 and list2):
+            return list1 or list2
+        
+        currNode = None
+        if list1.val < list2.val:
+            currNode = list1
+            currNode.next = self.mergeLists(list1.next, list2)
+        else:
+            currNode = list2
+            currNode.next = self.mergeLists(list1, list2.next)
+        
+        return currNode
+
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        size = len(lists)
-
-        heap = []
-
-        for list_node in lists:
-            while list_node:
-                tmp = list_node
-                list_node = list_node.next
-                tmp.next = None
-                heap.append(tmp)
+        if not lists:
+            return None
         
-        heap.sort(key=lambda x: x.val)
-    
-        newList = ListNode()
-        currNode = newList
-        for nextNode in heap:
-            currNode.next = nextNode
-            nextNode.next = None
-            currNode = nextNode
+        while len(lists) > 1:
+            lists.append(self.mergeLists(lists.pop(0), lists.pop(0)))
         
-        return newList.next
+        return lists[0]
