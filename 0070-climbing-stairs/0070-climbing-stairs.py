@@ -1,12 +1,13 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        if n < 3:
+        if n <= 3:
             return n
 
-        step = [1, 1]
-        for i in range(1, n):
-            tmp = step[1]
-            step[1] = sum(step)
-            step[0] = tmp
-        return step[1]
+        steps = [2, 3]
+        for i in range(n - 3):
+            tmp = steps[1]
+            steps[1] = sum(steps)
+            steps[0] = tmp
+
+        return steps[1]
         
