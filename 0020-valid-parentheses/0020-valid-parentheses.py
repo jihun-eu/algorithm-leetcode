@@ -5,20 +5,17 @@ class Solution:
             "}": "{",
             "]": "["
         }
-        
-        stack = []
 
+        stack = []
         for c in s:
             if c not in brackets:
                 stack.append(c)
                 continue
 
-            if len(stack) == 0:
+            if not stack:
                 return False
-
-            tmp = brackets[c]
+            
             if stack.pop() != brackets[c]:
                 return False
         
-        return len(stack) == 0
-            
+        return not stack
