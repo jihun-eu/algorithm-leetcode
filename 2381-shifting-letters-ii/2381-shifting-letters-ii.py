@@ -2,6 +2,7 @@ class Solution:
     def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
         ALPHABET_COUNT = 26
         UNICODE_A = 97
+
         size = len(s)
         dp = [0] * size
 
@@ -16,8 +17,8 @@ class Solution:
         for i in range(1, size):
             dp[i] = (dp[i] + dp[i-1]) % ALPHABET_COUNT
         
-        shifted = ''
+        shiftedLetter = ''
         for i in range(size):
-            shifted += chr(((ord(s[i]) - UNICODE_A + dp[i]) % ALPHABET_COUNT) + UNICODE_A)
+            shiftedLetter += chr(((ord(s[i]) - UNICODE_A + dp[i]) % ALPHABET_COUNT) + UNICODE_A)
 
-        return shifted
+        return  shiftedLetter
