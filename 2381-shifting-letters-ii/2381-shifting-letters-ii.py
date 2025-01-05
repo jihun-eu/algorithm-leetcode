@@ -17,8 +17,8 @@ class Solution:
         for i in range(1, size):
             dp[i] = (dp[i] + dp[i-1]) % ALPHABET_COUNT
         
-        shiftedLetter = ''
+        shiftedLetters = ''
         for i in range(size):
-            shiftedLetter += chr(((ord(s[i]) - UNICODE_A + dp[i]) % ALPHABET_COUNT) + UNICODE_A)
+            shiftedLetters += chr(((ord(s[i]) - UNICODE_A + dp[i]) % ALPHABET_COUNT) + UNICODE_A)
 
-        return  shiftedLetter
+        return  shiftedLetters
