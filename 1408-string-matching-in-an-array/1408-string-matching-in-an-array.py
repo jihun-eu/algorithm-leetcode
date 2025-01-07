@@ -3,7 +3,7 @@ class Solution:
 
         substrings = []
 
-        words.sort(key=lambda x: len(x))
+        words.sort(key=len)
 
         for i in range(len(words)-1):
             for compare in words[i+1:]:
