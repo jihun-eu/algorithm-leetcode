@@ -3,11 +3,8 @@ class Solution:
         if n <= 3:
             return n
 
-        steps = [2, 3]
-        for i in range(n - 3):
-            tmp = steps[1]
-            steps[1] = sum(steps)
-            steps[0] = tmp
+        steps = [3, 5]
+        for _ in range(n - 3):
+            steps[0], steps[1] = steps[1], sum(steps)
 
-        return steps[1]
-        
+        return steps[0]
