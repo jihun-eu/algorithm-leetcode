@@ -4,17 +4,11 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
         size = len(nums)
-        zeroPointer = nonZeroPointer = 0
-        while nonZeroPointer < size and zeroPointer < size:
-            if nums[zeroPointer] != 0:
-                zeroPointer += 1
-                continue
-            if nums[nonZeroPointer] == 0:
-                nonZeroPointer += 1
-                continue
-
-            if nonZeroPointer < zeroPointer:
-                nonZeroPointer = zeroPointer + 1
-            else:
+        
+        zeroPointer = 0
+        for nonZeroPointer in range(size):
+            if nums[zeroPointer] == 0 and nums[nonZeroPointer] != 0:
                 nums[zeroPointer], nums[nonZeroPointer] = nums[nonZeroPointer], nums[zeroPointer]
             
+            if nums[zeroPointer] != 0:
+                zeroPointer += 1
