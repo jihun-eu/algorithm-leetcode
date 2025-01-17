@@ -3,25 +3,20 @@ class Solution:
         
         maxRow = len(mat)
         maxCol = len(mat[0])
-        visited = []
-        for x in range(maxRow):
-            for y in range(maxCol):
-                if mat[x][y]:
-                    mat[x][y] = -1
-                else:
-                    visited.append((x, y))
+        INF = maxRow * maxCol
 
-        while visited:
-            pointX, pointY = visited.pop(0)
-            for newPointX, newPointY in [(pointX+1,pointY),(pointX,pointY+1),(pointX-1,pointY),(pointX,pointY-1)]:
-                if newPointX < 0 or newPointX >= maxRow or newPointY < 0 or newPointY >= maxCol or mat[newPointX][newPointY] != -1:
-                    continue
-                mat[newPointX][newPointY] = mat[pointX][pointY] + 1
-                visited.append((newPointX, newPointY))
-        return mat
-            
+        for row in range(maxRow):
+            for col in range(maxCol):
+                if mat[row][col] > 0:
+                    topNeighbor = mat[row-1][col] if row > 0 else INF
+                    leftNeighbor = mat[row][col-1] if col > 0 else INF
+                    mat[row][col] = min(topNeighbor, leftNeighbor) + 1
+
+        for row in range(maxRow - 1, -1, -1):
+            for col in range(maxCol - 1, -1, -1):
+                if mat[row][col] > 0:
+                    bottomNeighbor = mat[row+1][col] if row < maxRow - 1 else INF
+                    rightNeighbor = mat[row][col+1] if col < maxCol - 1 else INF
+                    mat[row][col] = min(mat[row][col], bottomNeighbor + 1, rightNeighbor + 1)
         
-        return distMatrix
-
-                
-                
+        return mat
