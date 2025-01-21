@@ -8,24 +8,15 @@ class Node:
 
 from typing import Optional
 class Solution:
+    visited = {}
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        if not node:
-            return None
-        
-        visited = {}
-        queue = [node]
-        
-        visited[node] = Node(node.val)
+        if not node: return node
+        if node in Solution.visited: return Solution.visited[node]
 
-        while queue:
-            currNode = queue.pop(0)
-            for neighbor in currNode.neighbors:
-                if neighbor not in visited:
-                    visited[neighbor] = Node(neighbor.val)
-                    queue.append(neighbor)
+        Solution.visited[node] = Node(node.val)
+        for neighbor in node.neighbors:
+            Solution.visited[node].neighbors.append(self.cloneGraph(neighbor))
 
-                visited[currNode].neighbors.append(visited[neighbor])
-
-        return visited[node]
+        return Solution.visited[node]
             
             
