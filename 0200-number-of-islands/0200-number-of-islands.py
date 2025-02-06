@@ -1,25 +1,20 @@
 class Solution:
-
     def numIslands(self, grid: List[List[str]]) -> int:
+        maxRow, maxCol = len(grid), len(grid[0])
         
-        def checkIsland(grid: List[List[str]], row: int, col: int):
-            if not (-1 < row < len(grid) and -1 < col < len(grid[0])):
-                return
-            
-            if grid[row][col] != "1":
-                return
+        move = [0, 1, 0, -1, 0]
 
-            grid[row][col] = "2"
-            for x, y in [(0, 1), (0, -1), (-1, 0), (1, 0)]:
-                checkIsland(grid, row+x, col+y)
-
-        island_count = 0
-        for row in range(len(grid)):
-            for col in range(len(grid[0])):
-                if grid[row][col] == "1":
-                    island_count += 1
-                    checkIsland(grid, row, col)
+        def flagIslands(row: int, col: int) -> None:
+            nonlocal grid, maxRow, maxCol, move
+            if row < 0 or maxRow <= row or col < 0 or maxCol <= col or grid[row][col] != "1": return
+            grid[row][col] = "0"
+            for i in range(4): flagIslands(row+move[i], col+move[i+1])
         
-        return island_count
+        islandCnt = 0
+        for row in range(maxRow):
+            for col in range(maxCol):
+                if grid[row][col] == "0": continue
+                flagIslands(row, col)
+                islandCnt += 1
 
-        
+        return islandCnt
