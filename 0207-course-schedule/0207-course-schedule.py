@@ -1,28 +1,26 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        precourses = [[] for course in range(numCourses)]
-        visited = [False] * numCourses
-
+        prerequisiteMap = [[] for _ in range(numCourses)]
         for course, prerequisite in prerequisites:
-            precourses[course].append(prerequisite)
+            prerequisiteMap[course].append(prerequisite)
 
+        visited = [False] * numCourses
         def isCycle(course: int) -> bool:
-            nonlocal precourses, visited
-            if not precourses[course]: return False
+            nonlocal prerequisiteMap, visited
+            if not prerequisiteMap[course]: return False
 
             if visited[course]: return True
             visited[course] = True
-            
-            for prerequisite in precourses[course]:
-                if isCycle(prerequisite): return True
 
-            # course is acyclic
-            precourses[course].clear()
+            for prerequisite in prerequisiteMap[course]:
+                if isCycle(prerequisite): return True
             
+            prerequisiteMap[course].clear()
             return False
 
+
         for course in range(numCourses):
-            visited = [False] * numCourses
             if isCycle(course): return False
+            visited = [False] * numCourses
         
         return True
