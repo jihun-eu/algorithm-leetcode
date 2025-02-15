@@ -1,29 +1,39 @@
+from collections import defaultdict
+class DSU:
+    def __init__(self, size: int) -> None:
+        self.representatives = [i for i in range(size)]
+
+    def union(self, a: int, b: int) -> None:
+        representativeA = self.find(a)
+        representativeB = self.find(b)
+        if representativeA == representativeB: return
+        self.representatives[max(representativeA, representativeB)] = min(representativeA, representativeB)
+    
+    def find(self, representative: int) -> int:
+        if self.representatives[representative] == representative: return representative
+        return self.find(self.representatives[representative])
+
 class Solution:
     def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
-        adjacents = {}
-        for account in accounts:
-            firstEmail = account[1]
-            if firstEmail not in adjacents: adjacents[firstEmail] = []
-            for email in account[2:]:
-                adjacents[firstEmail].append(email)
-                if email not in adjacents: adjacents[email] = []
-                adjacents[email].append(firstEmail)
+        disjointSetUnion = DSU(len(accounts))
+        emailGroup = {}
+
+        for i, account in enumerate(accounts):
+            for email in account[1:]:
+                if email in emailGroup:
+                    disjointSetUnion.union(i, emailGroup[email])
+
+                else:
+                    emailGroup[email] = i
         
-        visited = set()
-        def mergeAccounts(mergedAccount: List[str], email: str) -> None:
-            nonlocal adjacents, visited
-            visited.add(email)
-            mergedAccount.append(email)
-            for adjacent in adjacents[email]:
-                if adjacent in visited: continue
-                mergeAccounts(mergedAccount, adjacent)
-        
+        components = defaultdict(list)
+        for email, representative in emailGroup.items():
+            groupRepresentative = disjointSetUnion.find(representative)
+            components[groupRepresentative].append(email)
+
         mergedAccounts = []
-        for account in accounts:
-            name, firstEmail = account[0], account[1]
-            if firstEmail in visited: continue
-            mergedAccount = []
-            mergeAccounts(mergedAccount, firstEmail)
-            mergedAccounts.append([name] + sorted(mergedAccount))
-        
-        return mergedAccounts
+        for accountIndex, emails in components.items():
+            name = accounts[accountIndex][0]
+            mergedAccounts.append([name]+sorted(emails))
+
+        return mergedAccounts     
