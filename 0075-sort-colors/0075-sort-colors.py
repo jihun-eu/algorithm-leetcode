@@ -3,12 +3,20 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        colors = [0] * 3
-        for color in nums:
-            colors[color] += 1
-        
-        index = 0
-        for color in range(3):
-            for _ in range(colors[color]):
-                nums[index] = color
-                index += 1
+        if len(nums) == 1:
+            return
+        if len(nums) == 2:
+            nums[0], nums[1] = min(nums), max(nums)
+            
+        red, white, blue = 0, 0, len(nums)-1
+        while white <= blue:
+            if nums[white] == 0:
+                nums[red], nums[white] = nums[white], nums[red]
+                red += 1
+                white += 1
+            elif nums[white] == 1:
+                white += 1
+            else:
+                nums[blue], nums[white] = nums[white], nums[blue]
+                blue -= 1
+
