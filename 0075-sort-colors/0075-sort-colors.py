@@ -3,11 +3,6 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        if len(nums) == 1:
-            return
-        if len(nums) == 2:
-            nums[0], nums[1] = min(nums), max(nums)
-            
         red, white, blue = 0, 0, len(nums)-1
         while white <= blue:
             if nums[white] == 0:
@@ -19,4 +14,3 @@ class Solution:
             else:
                 nums[blue], nums[white] = nums[white], nums[blue]
                 blue -= 1
-
