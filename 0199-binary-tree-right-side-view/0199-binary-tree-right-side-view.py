@@ -7,14 +7,19 @@
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         rightSideNodes = []
-        def dfs(root: Optional[TreeNode], level: int) -> None:
-            nonlocal rightSideNodes
-            if not root: return root
-            if len(rightSideNodes) < level:
-                rightSideNodes.append(root.val)
-            nextLevel = level + 1
-            dfs(root.right, nextLevel)
-            dfs(root.left, nextLevel)
         
-        dfs(root, 1)
+        if not root: return rightSideNodes
+
+        queue = deque([(root, 1)])
+        while queue:
+            node, level = queue.popleft()
+            if len(rightSideNodes) < level:
+                rightSideNodes.append(node.val)
+            
+            nextLevel = level + 1
+            if node.right:
+                queue.append((node.right, nextLevel))
+            if node.left:
+                queue.append((node.left, nextLevel))
+        
         return rightSideNodes
