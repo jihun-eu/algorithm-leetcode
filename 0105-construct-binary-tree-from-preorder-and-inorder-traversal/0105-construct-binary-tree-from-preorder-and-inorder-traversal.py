@@ -9,16 +9,21 @@ class Solution:
         
         preorderDeque = deque(preorder)
 
-        def build(preorder: int, inorder: int) -> Optional[TreeNode]:
-            if not inorder:
+        inorderIndexMap = {}
+        for i, node in enumerate(inorder):
+            inorderIndexMap[node] = i
+
+        def build(start: int, end: int) -> Optional[TreeNode]:
+            nonlocal preorderDeque, inorderIndexMap
+            if end < start:
                 return
-            
-            inorderIndex = inorder.index(preorder.popleft())
-            
-            node = TreeNode(inorder[inorderIndex])
-            node.left = build(preorder, inorder[:inorderIndex])
-            node.right = build(preorder, inorder[inorderIndex+1:])
+
+            node = TreeNode(preorderDeque.popleft())
+            mid = inorderIndexMap[node.val]
+
+            node.left = build(start, mid-1)
+            node.right = build(mid+1, end)
 
             return node
 
-        return build(preorderDeque, inorder)
+        return build(0, len(inorder)-1)
