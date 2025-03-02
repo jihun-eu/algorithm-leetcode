@@ -8,21 +8,23 @@ class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         
         preorder = deque(preorder)
-        
-        def build(preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-            if not inorder:
-                return None
-            
-            idx = inorder.index(preorder.popleft())
-            mid = inorder[idx]
 
-            node = TreeNode(mid)
-            node.left = build(preorder, inorder[:idx])
-            node.right = build(preorder, inorder[idx+1:])
+        inorderIndexMap = {}
+        for idx, val in enumerate(inorder):
+            inorderIndexMap[val] = idx
+        
+        def build(start: int, end: int) -> Optional[TreeNode]:
+            nonlocal preorder, inorderIndexMap
+            if not start < end:
+                return None
+
+
+            node = TreeNode(preorder.popleft())
+            
+            mid = inorderIndexMap[node.val]
+            node.left = build(start, mid)
+            node.right = build(mid+1, end)
 
             return node
-
-        return build(preorder, inorder)
-
-
-
+            
+        return build(0, len(preorder))
