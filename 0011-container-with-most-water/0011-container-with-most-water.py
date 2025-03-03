@@ -19,7 +19,3 @@ class Solution:
             max_area = max(max_area, tmp_area)
 
         return max_area
-
-
-
-
