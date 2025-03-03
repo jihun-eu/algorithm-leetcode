@@ -1,15 +1,17 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
         
-        isGonnaMakeit = [False] * len(s)
+        @cache
+        def isGonnaMakeit(endOfString: int) -> bool:
+            nonlocal wordDict
 
-        for endOfString in range(len(s)):
+            if endOfString < 0:
+                return True
+
             for word in wordDict:
-                if endOfString < len(word) - 1:
-                    continue
-                if len(word) - 1 < endOfString and not isGonnaMakeit[endOfString - len(word)]:
-                    continue
-                if s[endOfString - len(word) + 1: endOfString + 1] == word:
-                    isGonnaMakeit[endOfString] = True
+                if s[endOfString - len(word) + 1: endOfString + 1] == word and isGonnaMakeit(endOfString - len(word)):
+                    return True
+            
+            return False
 
-        return isGonnaMakeit[-1]        
+        return isGonnaMakeit(len(s)-1)
