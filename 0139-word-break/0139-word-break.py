@@ -1,12 +1,18 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        dp = [False] * len(s)
-        for i in range(len(s)):
-            for word in wordDict:
-                if i < len(word) - 1: continue
-                if i != len(word) - 1 and not dp[i - len(word)]: continue
-                if s[i-len(word)+1:i+1] == word:
-                    dp[i] = True
-                    break
         
-        return dp[-1]
+        isGonnaMakeit = [False] * len(s)
+
+        for endOfString in range(len(s)):
+            for word in wordDict:
+                if endOfString < len(word) - 1:
+                    continue
+                
+                if endOfString != len(word) - 1 and not isGonnaMakeit[endOfString - len(word)]:
+                    continue
+
+                if s[endOfString - len(word) + 1: endOfString + 1] == word:
+                    isGonnaMakeit[idx] = True
+                    break
+
+        return isGonnaMakeit[-1]
