@@ -1,12 +1,14 @@
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-        total = sum(nums)
-        if total & 1: return False
-        targetScore = total // 2
-        
-        dp = [True] + [False] * targetScore
+        totalSum = sum(nums)
+        if totalSum & 1:
+            return False
+
+        targetNum = totalSum // 2
+
+        dp = [True] + [False] * targetNum
         for num in nums:
-            for currScore in range(targetScore, num-1, -1):
-                dp[currScore] |= dp[currScore-num]
-        
+            for currNum in range(targetNum, num-1, -1):
+                dp[currNum] |= dp[currNum-num]
+
         return dp[-1]
