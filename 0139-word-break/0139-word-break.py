@@ -7,12 +7,9 @@ class Solution:
             for word in wordDict:
                 if endOfString < len(word) - 1:
                     continue
-                
-                if endOfString != len(word) - 1 and not isGonnaMakeit[endOfString - len(word)]:
+                if len(word) - 1 < endOfString and not isGonnaMakeit[endOfString - len(word)]:
                     continue
-
                 if s[endOfString - len(word) + 1: endOfString + 1] == word:
-                    isGonnaMakeit[idx] = True
-                    break
+                    isGonnaMakeit[endOfString] = True
 
-        return isGonnaMakeit[-1]
+        return isGonnaMakeit[-1]        
