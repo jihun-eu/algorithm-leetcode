@@ -5,14 +5,16 @@ class Solution:
         if mostCommonFreq * 2 < len(nums):
             return -1
 
-        count = 0
+        leftMostCommonFreq = 0
+        idx = -1
         for i in range(len(nums)):
-            total = i + 1
+            leftSideCount = i + 1
             if nums[i] == mostCommonVal:
-                count += 1
+                leftMostCommonFreq += 1
                 mostCommonFreq -= 1
-            if total < count * 2 and (len(nums) - total) < mostCommonFreq * 2:
-                return total - 1
+            if leftSideCount < leftMostCommonFreq * 2 and (len(nums) - leftSideCount) < mostCommonFreq * 2:
+                idx = i
+                break
 
-        return -1
+        return idx
             
