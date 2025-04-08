@@ -1,50 +1,38 @@
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
         move = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
         rowSize = len(heights)
         colSize = len(heights[0])
 
-        pacificMap = [[False] * colSize for _ in range(rowSize)]
-        atlanticMap = [[False] * colSize for _ in range(rowSize)]
-
-        def bfs(queue, oceanMap, visited):
+        def bfs(queue, visited):
             nonlocal heights
             while queue:
                 row, col = queue.popleft()
-                print(row, col)
-                visited[row][col] = oceanMap[row][col] = True
-                for addr, addc in move:
-                    newRow = row + addr
-                    newCol = col + addc
-                    if not (0 <= newRow < rowSize and 0 <= newCol < colSize):
-                        continue
-                    if visited[newRow][newCol]:
-                        continue
-                    if heights[newRow][newCol] < heights[row][col]:
+                visited[row][col] = True
+                for newRow, newCol in [(row+1, col), (row-1, col), (row, col+1), (row, col-1)]:
+                    if not (0 <= newRow < rowSize and 0 <= newCol < colSize) or visited[newRow][newCol] or heights[newRow][newCol] < heights[row][col]:
                         continue
                     queue.append([newRow, newCol])
 
-            print(oceanMap)
-            return oceanMap
-
-        queue = deque()
-        visited = [[False] * colSize for _ in range(rowSize)]
+        pacificQ = deque()
+        atlanticQ = deque()
+        
+        pacificMap = [[False] * colSize for _ in range(rowSize)]
+        atlanticMap = [[False] * colSize for _ in range(rowSize)]
+        
         for row in range(rowSize):
-            queue.append([row, 0])
-            visited[row][0] = True
+            pacificQ.append([row, 0])
+            atlanticQ.append([row, colSize-1])
+            pacificMap[row][0] = atlanticMap[row][colSize-1] = True
+            
         for col in range(colSize):
-            queue.append([0, col])
-            visited[0][col] = True
-        pacificMap = bfs(queue, pacificMap, visited)
-        queue = deque()
-        visited = [[False] * colSize for _ in range(rowSize)]
-        for row in range(rowSize):
-            queue.append([row, colSize-1])
-            visited[row][colSize-1] = True
-        for col in range(colSize):
-            queue.append([rowSize-1, col])
-            visited[rowSize-1][col] = True
-        atlanticMap = bfs(queue, atlanticMap, visited)
+            pacificQ.append([0, col])
+            atlanticQ.append([rowSize-1, col])
+            pacificMap[0][col] = atlanticMap[rowSize-1][col] = True
+            
+        bfs(pacificQ, pacificMap)
+        bfs(atlanticQ, atlanticMap)
 
 
         flowables = []
@@ -54,11 +42,3 @@ class Solution:
                     flowables.append([r, c])
 
         return flowables
-
-
-
-
-
-
-
-        
