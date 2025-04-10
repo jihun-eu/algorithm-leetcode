@@ -7,14 +7,12 @@ class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         newList = slow = fast = ListNode(0, head)
 
-        # loop fast pointer until n interval
         for _ in range(n):
             fast = fast.next
-        
-        # loop together until fast pointer's last
+
         while fast.next:
-            fast = fast.next
             slow = slow.next
+            fast = fast.next
 
         slow.next = slow.next.next
 
