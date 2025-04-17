@@ -3,12 +3,6 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        length = len(nums)
-        k = k % length
-        rotated = [0] * length
-
-        for i in range(length):
-            rotated[(i+k) % length] = nums[i]
-
-        for i in range(length):
-            nums[i] = rotated[i]
+        k = k % len(nums)
+        if k != 0:
+            nums[:k], nums[k:] = nums[-k:], nums[:-k]
