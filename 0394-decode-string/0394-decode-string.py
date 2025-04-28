@@ -19,10 +19,5 @@ class Solution:
             else:
                 stack.append(c)
 
-        decodeString = ""
-        while stack:
-            decodeString = stack.pop() + decodeString
-
+        decodeString = "".join(stack)
         return decodeString
-                
-        
