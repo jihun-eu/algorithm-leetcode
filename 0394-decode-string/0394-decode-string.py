@@ -1,19 +1,28 @@
 class Solution:
     def decodeString(self, s: str) -> str:
-
+        
         stack = []
-        for char in s:
-            if char == "]":
-                substring = ''
-                while stack[-1] != "[":
-                    substring = stack.pop() + substring
+        for c in s:
+            if c == "]":
+
+                tmp = ""
+                while stack and stack[-1] != "[":
+                    tmp = stack.pop() + tmp
                 stack.pop()
 
-                digit = ""
+                tmpNum = ""
                 while stack and stack[-1].isdigit():
-                    digit = stack.pop() + digit
-                stack.append(substring * int(digit))
-            else:
-                stack.append(char)
+                    tmpNum = stack.pop() + tmpNum
 
-        return "".join(stack)
+                stack.append(tmp * int(tmpNum))
+
+            else:
+                stack.append(c)
+
+        decodeString = ""
+        while stack:
+            decodeString = stack.pop() + decodeString
+
+        return decodeString
+                
+        
