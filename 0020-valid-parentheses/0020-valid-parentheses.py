@@ -1,21 +1,19 @@
 class Solution:
-    def isValid(self, s: str) -> bool:
-        brackets = {
-            ")": "(",
-            "}": "{",
-            "]": "["
-        }
 
+    brackets = {
+        ")": "(",
+        "}": "{",
+        "]": "["
+    }
+
+    def isValid(self, s: str) -> bool:
         stack = []
         for c in s:
-            if c not in brackets:
+            if c not in Solution.brackets:
                 stack.append(c)
                 continue
-
-            if not stack:
-                return False
             
-            if stack.pop() != brackets[c]:
+            if not stack or stack.pop() != Solution.brackets[c]:
                 return False
         
         return not stack
