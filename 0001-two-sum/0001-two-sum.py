@@ -7,9 +7,9 @@ class Solution:
             num = nums[idx]
             
             if num in tmp:
-                break
+                return [tmp[num], idx]
             
             pairNum = target - num
             tmp[pairNum] = idx
             
-        return [tmp[num], idx]
+        return []
