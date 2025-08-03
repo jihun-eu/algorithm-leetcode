@@ -5,16 +5,14 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def swapChildren(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        root.left, root.right = root.right, root.left
-
-    def traverseTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if root == None:
-            return
-        self.traverseTree(root.left)
-        self.traverseTree(root.right)
-        self.swapChildren(root)
-
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        self.traverseTree(root)
+        if not root:
+            return None
+        
+        left = self.invertTree(root.left)
+        right = self.invertTree(root.right)
+
+        root.left = right
+        root.right = left
+
         return root
