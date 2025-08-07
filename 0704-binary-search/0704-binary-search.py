@@ -5,13 +5,12 @@ class Solution:
 
         while left <= right:
             mid = (left + right) // 2
-
-            if target == nums[mid]:
+            num = nums[mid]
+            if num == target:
                 return mid
-            
-            if target < nums[mid]:
+            if target < num:
                 right = mid - 1
             else:
                 left = mid + 1
-
+        
         return -1
